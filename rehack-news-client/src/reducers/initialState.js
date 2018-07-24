@@ -1,4 +1,5 @@
 export default {
   saves: [],
-  users: []
+  users: [],
+  session: !!sessionStorage.jwt
 }

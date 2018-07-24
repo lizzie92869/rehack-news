@@ -73,6 +73,26 @@ export const StyledInput = styled.input`
   /* border: 1px solid blue;  /* For debugging */
 `;
 
+export const StyledInputFirst = styled(StyledInput)`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-shrink: 1;
+  align-items: flex-start;
+  outline: none;
+  border: none;
+  padding-left: .5rem;
+  margin-right: 5px;
+  height: 1.8rem;
+  line-height: 1.8rem;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  font-size: 13px;
+`;
+
 export const SearchButton = styled.button`
   background-color: #ffb74d;
   line-height: 1.6rem;
