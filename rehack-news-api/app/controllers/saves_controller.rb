@@ -21,7 +21,8 @@ class SavesController < ApplicationController
       :id,
       :objectID,
       :title,
-      :url
+      :url,
+      :likes
     )
   end
 end
