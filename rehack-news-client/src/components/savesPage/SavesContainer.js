@@ -11,7 +11,8 @@ class SavesContainer extends Component {
     super(props);
 
     this.state = {
-      saves: this.props.saves
+      saves: this.props.saves,
+      currentCount: 0
     };
     this.deleteSave = this.deleteSave.bind(this);
   }
@@ -20,12 +21,18 @@ class SavesContainer extends Component {
     this.props.actions.deleteSave(story);
   }
 
+  increaseCount = (story) => {
+    console.log(story)
+  }
+
+
   render() {
     return (
       <BodyStyle>
         <SavesList
           saves={this.props.saves}
           onDismiss={this.deleteSave}
+          onLike={this.increaseCount}
         />
       </BodyStyle>
     )

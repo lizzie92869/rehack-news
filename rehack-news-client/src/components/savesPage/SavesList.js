@@ -14,7 +14,7 @@ import {
 } from '../style';
 
 
-const SavesList = ({saves, onDismiss}) => {
+const SavesList = ({saves, onDismiss, onLike}) => {
   return (
     <div className="saves">
       <WrapperBar>
@@ -27,14 +27,22 @@ const SavesList = ({saves, onDismiss}) => {
 
           <CommentsButtonImg
             target="_blank"
-            href={'https://news.ycombinator.com/item?id=' + save.objectID }>
-              <i className="fas fa-comment-dots"></i>
+            href={'https://news.ycombinator.com/item?id=' + save.objectID }
+          >
+            <i className="fas fa-comment-dots"></i>
           </CommentsButtonImg>
 
           <StoryContainer>
             <TitleLink href={save.url}>{save.title}</TitleLink>
             <FooterLink href={save.url}>{save.url}</FooterLink>
           </StoryContainer>
+
+          <button
+            style={{height: 2 + 'em', width: 2 + 'em'}}
+            onClick={() => onLike(save)}
+          >
+            {save.likes}
+          </button>
 
           <XButton onClick={() => onDismiss(save)}>
             &#10006;
