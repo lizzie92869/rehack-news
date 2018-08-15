@@ -14,6 +14,13 @@ class SavesController < ApplicationController
   def destroy
     @save = Save.where(id: params[:id]).first
     @save.destroy
+    render json: @save
+  end
+
+  def update #put '/saves/:id', to: 'saves#update'
+    @save = Save.find_by_id(params[:id])
+    @save.update_attributes(save_params)
+    render json: @save, status: :ok
   end
 
   def save_params
