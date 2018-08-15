@@ -267,6 +267,12 @@ export const XButton = styled(HeartButton)`
   margin-right: 0px;
 `
 
+export const LikeButton = styled(HeartButton)`
+width: 3rem;
+min-width: 3rem;
+max-width: 3rem;
+`
+
 //////////////////////////////////////////////////////////////
 //       Story Component
 //////////////////////////////////////////////////////////////

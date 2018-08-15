@@ -10,16 +10,20 @@ import {
   StoryContainer,
   TitleLink,
   FooterLink,
-  XButton
+  XButton,
+  LikeButton
 } from '../style';
 
 
-const SavesList = ({saves, onDismiss, onLike}) => {
+const SavesList = ({saves, onDismiss, onLike, onSortByLikes}) => {
   return (
     <div className="saves">
       <WrapperBar>
         <CommentsButtonBar>CMTs</CommentsButtonBar>
         <StoryContainerBar>SAVED STORIES</StoryContainerBar>
+        <button onClick={() => onSortByLikes()}>
+          sort likes
+        </button>
       </WrapperBar>
 
       {saves.map(save =>
@@ -37,12 +41,9 @@ const SavesList = ({saves, onDismiss, onLike}) => {
             <FooterLink href={save.url}>{save.url}</FooterLink>
           </StoryContainer>
 
-          <button
-            style={{height: 2 + 'em', width: 2 + 'em'}}
-            onClick={() => onLike(save)}
-          >
-            {save.likes}
-          </button>
+          <LikeButton onClick={() => onLike(save)}>
+            <i className="fas fa-heart"></i>  {save.likes}
+          </LikeButton>
 
           <XButton onClick={() => onDismiss(save)}>
             &#10006;

@@ -11,28 +11,92 @@ class SavesContainer extends Component {
     super(props);
 
     this.state = {
-      saves: this.props.saves,
-      currentCount: 0
+      saves: [],
     };
-    this.deleteSave = this.deleteSave.bind(this);
   }
 
-  deleteSave(story) {
-    this.props.actions.deleteSave(story);
+  setLike = (result) => {
+    const newSaves = this.state.saves.map(save => {
+        if (save.id !== result.id) return save;
+        return result;
+    })
+
+    this.setState({
+      saves: newSaves
+    })
   }
 
   increaseCount = (story) => {
-    console.log(story)
+    const url = `http://localhost:3001/api/v1/saves/${story.id}`;
+
+    const data = {
+      id: story.id,
+      objectID: story.objectID,
+      title: story.title,
+      url: story.url,
+      likes: story.likes + 1
+    }
+
+    fetch(url, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(result => this.setLike(result))
+    .catch(error => console.error('Error:', error))
   }
 
+  componentDidMount() {
+    fetch(`http://localhost:3001/api/v1/saves`)
+    .then(response => response.json())
+    .then(result => this.setState({saves: result}))
+    .catch((error) => error)
+  }
+
+  deleteSave = (save) => {
+    // this.props.actions.deleteSave(story);
+    fetch(`http://localhost:3001/api/v1/saves/${save.id}`, {
+      method: 'DELETE'
+    }).then(response => response.json())
+    .then(result => this.removeFromState(result))
+    .catch(error => console.error('Error:', error))
+  }
+
+  removeFromState(result){
+    const newSaves = this.state.saves.filter(save => save.id !== result.id)
+
+    this.setState({
+      saves: newSaves
+    })
+  }
+
+  onSortByLikes = () => {
+    function compare(a,b) {
+      if (a.likes < b.likes)
+        return -1;
+      if (a.likes > b.likes)
+        return 1;
+      return 0;
+    }
+
+    const savesSortedByLikes = this.state.saves.sort(compare)
+
+    this.setState({
+      saves: savesSortedByLikes
+    })
+  }
 
   render() {
     return (
       <BodyStyle>
         <SavesList
-          saves={this.props.saves}
+          saves={this.state.saves}
           onDismiss={this.deleteSave}
           onLike={this.increaseCount}
+          onSortByLikes={this.onSortByLikes}
         />
       </BodyStyle>
     )
